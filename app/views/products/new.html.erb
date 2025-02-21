@@ -1,0 +1,8 @@
+<h3>Create an Product</h3>
+<%= form_with model: @product do |form| %>
+   <%= form.text_field :name, placeholder: "name" %>
+  <%= form.text_field :desc, placeholder: "description" %>
+  <%= form.text_field :price, placeholder: "price" %>
+  <%= form.text_field :quantity, placeholder: "quantity" %> 
+  <%= form.submit %>
+<% end %>
