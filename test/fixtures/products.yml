@@ -2,12 +2,14 @@
 
 one:
   name: MyString
-  desc: MyText
+  description: MyString
   price: 1.5
   quantity: 1
+  category: one
 
 two:
   name: MyString
-  desc: MyText
+  description: MyString
   price: 1.5
   quantity: 1
+  category: two

@@ -1,0 +1,46 @@
+<%= form_with model: product do |form| %>
+<div>
+    <%= form.label :name%> <br>
+    <%= form.text_field :name %>
+    <% product.errors.full_messages_for(:name).each do |message| %>
+         <div><%= message%></div>
+    <%end%>
+</div>
+
+<div>
+<%= form.label :description %><br>
+<%= form.text_area :description %> <br>    
+     <% product.errors.full_messages_for(:description).each do |message| %>
+        <div><%= message %></div>
+     <%end%>
+</div>
+
+
+<div>
+    <%= form.label :price%> <br>
+    <%= form.number_field :price ,step: 0.01 %>
+    <% product.errors.full_messages_for(:price).each do |message| %>
+         <div><%= message%></div>
+    <%end%>
+</div>
+
+
+
+<div>
+    <%= form.label :quantity%> <br>
+    <%= form.number_field :quantity %>
+    <% product.errors.full_messages_for(:quantity).each do |message| %>
+         <div><%= message%></div>
+    <%end%>
+</div>
+
+
+<div class="field">
+    <%= form.label :category_id, "Category" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name %>
+</div>
+
+
+<div class="actions"><%= form.submit%></div>
+
+<%end%>

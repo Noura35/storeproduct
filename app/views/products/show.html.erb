@@ -1,5 +1,25 @@
 <h1>show Product </h1>
-<h1><%= @article.name %></h1>
 
-<%= @article.desc %>
-<%= button_to 'Remove', article_path(@article), method: 'delete', data: { confirm: 'Are you sure?' } %>
+
+<p><strong>Name:</strong>
+    <%= @product.name%>
+</p>
+
+
+
+<p><strong>Description:</strong>
+    <%= @product.description%>
+</p>
+
+<p><strong>Price:</strong> <%= @product.price%></p>
+
+<p><strong>Quantity:</strong><%= @product.quantity%></p>
+
+<p><strong>Category:</strong><%= @product.category.name%></p>
+
+
+<div class="actions">
+<%= button_to 'Remove', product_path(@product), method: 'delete', data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Edit', edit_product_path(@product) %>
+
+</div>

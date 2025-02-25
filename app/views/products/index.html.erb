@@ -1,7 +1,16 @@
+
 <h1>Products</h1>
 
+<%= link_to 'create', new_product_path %>
+
 <ul>
-  <% @Products.each do |Product| %>
-    <li><%= link_to Product.name, article_path(Product)  %></li>
+  <% @products.each do |product| %>
+    <li><%= link_to product.name, product_path(product)  %></li>
+    <li><%= product.description %></li>
+    <li><%= product.price%></li>
+    <li><%= product.quantity%></li>
+    <li><%= product.category.name%></li>
+
   <% end %>
 </ul>
+

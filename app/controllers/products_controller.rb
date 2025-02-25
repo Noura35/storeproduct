@@ -22,10 +22,22 @@ class ProductsController < ApplicationController
   end
 
 
+
+
+
+
+
   def create
-    @product=Product.create(product_params)
-    redirect_to products_path   
+    @product=Product.new(product_params)
+    if @product.save
+      redirect_to products_path  , notice: 'product was successfully created'
+    else
+      render :new
+    end
+
   end 
+
+
 
 
 
@@ -37,7 +49,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params 
-    params.require(:product).permit(:name, :desc,:price,:quantity)
+    params.require(:product).permit(:name, :description,:price,:quantity, :category_id)
   end
 
 end
