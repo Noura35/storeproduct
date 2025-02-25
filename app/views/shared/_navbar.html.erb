@@ -1,61 +1,29 @@
 
 
-<nav class=" fixed w-full z-10 top-0 start-0 m-auto">
-    <div class="py-4 px-10 flex items-center justify-between flex-wrap">
-        <a href="#" class="font-bold" >MarketLOGO</a>
-
-        <div class="md:hidden">
-            <button data-collapse-toggle="#main-nav">
-                <span class="sr-only">Ouvrir le menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-                </svg>
-            </button>
+<nav class="bg-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex">
+        <a href="/" class="flex-shrink-0 flex items-center text-xl font-bold text-blue-500">
+          My E-Commerce
+        </a>
+        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <%= link_to 'Home', root_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
+          <%= link_to 'Products', products_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
         </div>
-        <div class="w-full hidden md:block md:w-max" id="main-nav">
-            <ul class="p-4 mt-4 bg-gray-50 font-medium border border-gray-200 md:flex md:bg-transparent md:border-0 md:mt-0">
-             
+      </div>
+      <div class="flex items-center">
+        <div class="hidden sm:flex sm:items-center">
+          <% if user_signed_in? %>
 
-                <li>
-                    <a href="#" class="border-b border-blue-700 text-blue-700 block px-3 py-2">BED LINEN</a>
-                </li>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' } %>
 
-                <li>
-                    <a href="#" class="block px-3 py-2 md:hover:text-blue-700 md:hover:border-blue-700 md:hover:border-b">BATH LINEN</a>
-                </li>
-
-                <li>
-                    <a href="#" class="block px-3 py-2 md:hover:text-blue-700 md:hover:border-blue-700 md:hover:border-b">SPA LINEN</a>
-                </li>
-                <li>
-                    <a href="#" class="block px-3 py-2 md:hover:text-blue-700  md:hover:border-blue-700 md:hover:border-b">TABLE LINEN</a>
-                </li>
-
-
-                 <li>
-                    <a href="#" class="block px-3 py-2 md:hover:text-blue-700  md:hover:border-blue-700 md:hover:border-b">HOTEL BEDDING</a>
-                </li>
-
-
-                 <li>
-                    <a href="#" class="block px-3 py-2 md:hover:text-blue-700  md:hover:border-blue-700 md:hover:border-b">INDIVIDUALS</a>
-                </li>
-
-
-
-
-
-
-
-                 <li>
-                    <a href="#" class="block px-3 py-2 hover:text-blue-700 ">LOGIN</a>
-                </li>
-
-                 <li>
-                    <a href="#" class="block px-3 py-2 bg-blue-700 text-white">SIGN UP</a>
-                </li>
-            </ul>
+          <% else %>
+            <%= link_to 'Sign Up', new_user_registration_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
+            <%= link_to 'Login', new_user_session_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
+          <% end %>
         </div>
+      </div>
     </div>
+  </div>
 </nav>
-
