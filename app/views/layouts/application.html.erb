@@ -16,17 +16,24 @@
 
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-<%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 
   </head>
 
-  <body>
-    <%= render 'shared/navbar' %>
+<!--
+<body class="font-[Poppins] bg-gradient-to-t from-[#fbc2eb] to-[#a6c1ee] h-screen">
+-->
 
+<body class="h-screen">
+    <%= render 'shared/navbar' %>
     <main >
       <%= yield %>
     </main>
+    <%= render 'shared/footer' %>
 
 
   </body>

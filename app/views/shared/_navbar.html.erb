@@ -1,29 +1,66 @@
 
 
-<nav class="bg-white shadow-md">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16">
-      <div class="flex">
-        <a href="/" class="flex-shrink-0 flex items-center text-xl font-bold text-blue-500">
-          My E-Commerce
-        </a>
-        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-          <%= link_to 'Home', root_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
-          <%= link_to 'Products', products_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
-        </div>
-      </div>
-      <div class="flex items-center">
-        <div class="hidden sm:flex sm:items-center">
-          <% if user_signed_in? %>
+<header class="bg-white">
+        <nav class="flex justify-between items-center w-[92%]  mx-auto">
+        
+            <div>
+                <%= image_tag('logo-store.png', style: ' height: 60px ') %>
+            </div>
 
-        <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <div
+                class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+                <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+                     <li>
+                        <%= link_to 'Home', root_path, class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
+                    </li>
 
-          <% else %>
-            <%= link_to 'Sign Up', new_user_registration_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
-            <%= link_to 'Login', new_user_session_path, class: 'text-gray-500 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium' %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
+                    
+                    <li>
+                   <%= link_to 'Products', products_path, class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
+                    </li>
+                   
+                    <li>
+                      <%= link_to 'Men', products_path , class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
+                    </li>
+                    <li>
+
+                        <%= link_to 'Women', products_path ,class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium'%>
+
+                    </li>
+                    <li>
+                         <%= link_to 'Kids',products_path,  class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
+
+                    </li>
+                </ul>
+            </div>
+
+
+
+
+
+            <div class="flex items-center gap-6">
+
+
+              <% if user_signed_in? %>
+
+              <%= link_to 'Logout',destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' } , class: 'bg-[#000] text-white px-5 py-2 rounded-full hover:bg-[#87acec]' %>
+
+              <% else %>
+                <%= link_to 'Sign Up', new_user_registration_path, class: 'bg-[#f68a0c] text-white px-5 py-2 rounded-full hover:bg-[#f68a0c]' %>
+              <% end %>
+              
+              <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+
+
+            </div>
+    </header>
+
+
+
+     <script>
+        const navLinks = document.querySelector('.nav-links')
+        function onToggleMenu(e){
+            e.name = e.name === 'menu' ? 'close' : 'menu'
+            navLinks.classList.toggle('top-[9%]')
+        }
+    </script>
