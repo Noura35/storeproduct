@@ -10,8 +10,15 @@ Rails.application.routes.draw do
 
   resources :categories
   resources :products
-  resources :orders
 
+  resources :shopping_cart_items, only: [:create, :update, :destroy]
+  resource :shopping_cart, only: [:show]
+  
+
+  resources :orders, only: [:new, :create, :show]
+
+
+  post 'shopping_cart_items/:id/remove', to: 'shopping_cart_items#remove', as: 'remove_shopping_cart_item'
 
 
   get "up" => "rails/health#show", as: :rails_health_check

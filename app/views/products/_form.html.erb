@@ -1,4 +1,6 @@
-<%= form_with model: product do |form| %>
+
+<%= form_with(model: @product, local: true, html: { multipart: true }) do |form| %>
+
 <div>
     <%= form.label :name%> <br>
     <%= form.text_field :name %>
@@ -38,6 +40,12 @@
 <div class="field">
     <%= form.label :category_id, "Category" %>
     <%= form.collection_select :category_id, Category.all, :id, :name %>
+</div>
+
+
+<div class="field">
+  <%= form.label :image %>
+    <%= form.file_field :image %>
 </div>
 
 

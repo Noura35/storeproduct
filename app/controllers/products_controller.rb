@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  
+  
   def index
     @products = Product.all
   end
@@ -22,11 +24,6 @@ class ProductsController < ApplicationController
   end
 
 
-
-
-
-
-
   def create
     @product=Product.new(product_params)
     if @product.save
@@ -38,9 +35,6 @@ class ProductsController < ApplicationController
   end 
 
 
-
-
-
   def destroy
     @product=Product.find(params[:id])
     @product.destroy
@@ -49,7 +43,8 @@ class ProductsController < ApplicationController
 
   private
   def product_params 
-    params.require(:product).permit(:name, :description,:price,:quantity, :category_id)
+    params.require(:product).permit(:name, :description,:price,:quantity, :image ,:category_id)
   end
 
+  
 end
