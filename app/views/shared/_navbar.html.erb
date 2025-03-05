@@ -1,59 +1,92 @@
 
+<style>
+  /* Cacher le menu dropdown par défaut */
+  .group:hover .group-hover\:block {
+    display: block;
+  }
 
-<header class="bg-white">
-        <nav class="flex justify-between items-center w-[92%]  mx-auto">
-        
-            <div>
-                <%= image_tag('logo-store.png', style: ' height: 60px ') %>
-            </div>
+  /* Styles pour le dropdown */
+  #dropdownMenu {
+    display: none;
+  }
 
-            <div
-                class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
-                <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
-                     <li>
-                        <%= link_to 'Home', root_path, class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
-                    </li>
-
-                    
-                    <li>
-                   <%= link_to 'Products', products_path, class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
-                    </li>
-                   
-                    <li>
-                      <%= link_to 'Men', products_path , class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
-                    </li>
-                    <li>
-
-                        <%= link_to 'Women', products_path ,class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium'%>
-
-                    </li>
-                    <li>
-                         <%= link_to 'Kids',products_path,  class: 'text-gray-500 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium' %>
-
-                    </li>
-                </ul>
-            </div>
+  /* Afficher dropdown lors du clic */
+  #dropdownMenu.show {
+    display: block;
+  }
+</style>
 
 
 
+<nav class="flex justify-between items-center w-[92%] mx-auto bg-white">
+  <!-- Logo -->
+  <div>
+    <%= image_tag('logo-noir.png', style: 'height: 70px') %>
+  </div>
 
+  <!-- Menu de navigation -->
+  <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto w-full flex items-center px-5 z-40">
+    <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+      <!-- Home Link -->
+      <li>
+        <%= link_to 'Home', root_path, class: 'text-gray-500 hover:text-red-800 px-3 py-2 text-sm font-medium' %>
+      </li>
 
-            <div class="flex items-center gap-6">
+      <!-- Affichage des catégories et sous-catégories -->
+      <% @categories.each do |category| %>
+        <li class="relative group">
+          <%= link_to category.name, category_path(category), class: 'text-gray-500 hover:text-red-800 px-3 py-2 text-sm font-medium' %>
 
-
-              <% if user_signed_in? %>
-
-              <%= link_to 'Logout',destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' } , class: 'bg-[#000] text-white px-5 py-2 rounded-full hover:bg-[#87acec]' %>
-
-              <% else %>
-                <%= link_to 'Sign Up', new_user_registration_path, class: 'bg-[#f68a0c] text-white px-5 py-2 rounded-full hover:bg-[#f68a0c]' %>
+          <!-- Dropdown pour sous-catégories -->
+          <% if category.subcategories.any? %>
+            <ul class="absolute left-0 hidden bg-white shadow-md group-hover:block">
+              <% category.subcategories.each do |subcategory| %>
+                <li><%= link_to subcategory.name, category_path(subcategory), class: 'block w-48 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %></li>
               <% end %>
-              
-              <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+            </ul>
+          <% end %>
+        </li>
+      <% end %>
 
 
-            </div>
-    </header>
+ 
+
+
+      <!-- User actions (Profile, Logout, Sign In) -->
+      <li>
+        <ul class="flex gap-8">
+          <li><i class="fa-regular fa-heart"></i></li>
+          <li><i class="fa-solid fa-cart-shopping"></i></li>
+
+          <li>
+            <% if user_signed_in? %>
+              <!-- Dropdown utilisateur -->
+              <div class="relative">
+                <i class="fa-regular fa-user cursor-pointer" id="dropdownButton"></i>
+
+                <!-- Menu déroulant utilisateur -->
+                <div id="dropdownMenu" class="absolute right-0 mt-2 w-48 bg-white shadow-md hidden">
+                  <div class="py-1">
+                    <%= link_to 'Profil', edit_user_registration_path, class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+                    <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+              <%= link_to 'Sign In', new_user_session_path, class: 'bg-[#000] text-white rounded-lg px-4 py-2 hover:bg-red-800' %>
+            <% end %>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Menu hamburger pour mobile -->
+  <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+</nav>
+
+
+
 
 
 
@@ -63,4 +96,18 @@
             e.name = e.name === 'menu' ? 'close' : 'menu'
             navLinks.classList.toggle('top-[9%]')
         }
-    </script>
+
+
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    dropdownButton.addEventListener('click', function () {
+      dropdownMenu.classList.toggle('hidden');
+    });
+  });
+</script>
+  
+

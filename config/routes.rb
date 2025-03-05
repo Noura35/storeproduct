@@ -8,8 +8,16 @@ Rails.application.routes.draw do
   }
 
 
-  resources :categories
-  resources :products
+ # resources :categories, only: [:show]
+  #resources :products
+
+  resources :categories 
+  resources :products do
+    get :subcategories, on: :collection
+  end  
+  
+
+
 
   resources :shopping_cart_items, only: [:create, :update, :destroy]
   resource :shopping_cart, only: [:show]

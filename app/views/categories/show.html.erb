@@ -1,9 +1,20 @@
-<h4><%= @category.name %></h4>
+<h1 class="text-3xl font-bold text-gray-900"><%= @category.name %></h1>
 
-<ul>
-  <li><%= link_to "edit" ,edit_category_path(@category) %></li>
-  <li><%= link_to "destroy" , category_path(@category) ,data:{
-    turbo_method: :delete,
-    turbo_confim: "Are you sure ?"
-  } %></li>
-</ul>
+<!-- Liste des produits -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+  <% if @products.any? %>
+    <% @products.each do |product| %>
+      <div class="group border rounded-lg shadow-md overflow-hidden">
+        <%= link_to product_path(product) do %>
+          <%= image_tag product.image.variant(resize_to_limit: [300, 300]), alt: product.name, class: 'w-full h-48 object-cover' if product.image.attached? %>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-900"><%= product.name %></h3>
+            <p class="mt-2 text-gray-600">$<%= product.price %></p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="text-gray-600">Aucun produit disponible pour cette catégorie.</p>
+  <% end %>
+</div>

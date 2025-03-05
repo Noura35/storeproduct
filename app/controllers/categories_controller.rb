@@ -1,53 +1,19 @@
 class CategoriesController < ApplicationController
-  def index
-      @categories=Category.all
-  end
+ 
 
 
-  def new
-       @category =Category.new
-  end
-
-  def edit
-    @category=Category.find(params[:id])
-  end 
-
-  def update  
-    @category=Category.find(params[:id])
-    @category.update(category_params)
-    redirect_to category_path(@category)
-  end
-
-
-  def show
-    @category =Category.find(params[:id ])
-  end
-
-
-  def create
-    @category=Category.new(category_params)
-
-    if @category.save
-      redirect_to categories_path  , notice: 'category was successfully created'
-    else
-      render new
+    def show
+      @category = Category.find(params[:id])
+    
+      # If a category has a parent_id, it's considered a subcategory
+      if params[:subcategory_id]
+        @subcategory = Category.find(params[:subcategory_id])
+        @products = @subcategory.products
+      else
+        @products = @category.products
+      end
     end
+  
 
-  end 
-
-
-
-
-
-  def destroy
-    @category=Category.find(params[:id])
-    @category.destroy
-    redirect_to categories_path  
-  end 
-
-  private
-  def category_params 
-    params.require(:category).permit(:name)
-  end
 
 end

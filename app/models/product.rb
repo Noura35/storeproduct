@@ -3,12 +3,12 @@ class Product < ApplicationRecord
   has_one_attached :image
 
 
-  belongs_to :category
   has_many :order_items,  dependent: :destroy
   has_many :shopping_cart_items, dependent: :destroy
 
 
   validates :name, presence: true
-  validates :description, presence: true,length: {minimum:6}
 
+  belongs_to :category, optional: true
+  belongs_to :subcategory, class_name: 'Category', optional: true
 end
