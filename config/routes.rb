@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'subcategory/show'
+  get 'subcategory/index'
   
 
   devise_for :users, controllers: {
@@ -11,10 +13,11 @@ Rails.application.routes.draw do
  # resources :categories, only: [:show]
   #resources :products
 
-  resources :categories 
-  resources :products do
-    get :subcategories, on: :collection
-  end  
+  resources :categories do
+    resources :subcategories, only: [:show], controller: 'subcategory'
+  end
+    
+  resources :products
   
 
 

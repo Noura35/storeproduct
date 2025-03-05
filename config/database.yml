@@ -27,7 +27,7 @@ default: &default
 
 development:
   <<: *default
-  database: strore_hotelerie
+  database: store_db
   username: dev
   password: "dev_store"
   host: localhost

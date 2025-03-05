@@ -21,7 +21,9 @@
 <nav class="flex justify-between items-center w-[92%] mx-auto bg-white">
   <!-- Logo -->
   <div>
-    <%= image_tag('logo-noir.png', style: 'height: 70px') %>
+<%= link_to root_path do %>
+  <%= image_tag('logo-noir.png', style: 'height: 70px') %>
+<% end %>
   </div>
 
   <!-- Menu de navigation -->
@@ -32,23 +34,30 @@
         <%= link_to 'Home', root_path, class: 'text-gray-500 hover:text-red-800 px-3 py-2 text-sm font-medium' %>
       </li>
 
-      <!-- Affichage des catégories et sous-catégories -->
-      <% @categories.each do |category| %>
-        <li class="relative group">
-          <%= link_to category.name, category_path(category), class: 'text-gray-500 hover:text-red-800 px-3 py-2 text-sm font-medium' %>
+      
 
-          <!-- Dropdown pour sous-catégories -->
-          <% if category.subcategories.any? %>
-            <ul class="absolute left-0 hidden bg-white shadow-md group-hover:block">
-              <% category.subcategories.each do |subcategory| %>
-                <li><%= link_to subcategory.name, category_path(subcategory), class: 'block w-48 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %></li>
-              <% end %>
-            </ul>
-          <% end %>
+<% Category.includes(:subcategories).each do |category| %>
+  <li class="relative group">
+    <%= link_to category.name, category_path(category) ,class: 'text-gray-500 hover:text-red-800 px-3 py-2 text-sm font-medium'%>
+    <ul class="absolute left-0 hidden bg-white shadow-md group-hover:block">
+      <% category.subcategories.each do |subcategory| %>
+        <li>
+          <%= link_to subcategory.name, category_subcategory_path(category, subcategory) , class: 'block w-48 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' %>
         </li>
       <% end %>
+    </ul>
+  </li>
+<% end %>
 
 
+
+
+
+ <% if user_signed_in? %>
+<li>
+<%= link_to 'New Product', new_product_path, class: ' inline-block bg-red-800 text-sm text-white px-6 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out' %>
+</li>
+<%end%>
  
 
 

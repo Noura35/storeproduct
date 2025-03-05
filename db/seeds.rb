@@ -1,36 +1,35 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Clear existing data (optional)
+Product.destroy_all
+Subcategory.destroy_all
+Category.destroy_all
 
+# Creating Categories
+men_category = Category.create!(name: "Men")
+women_category = Category.create!(name: "Women")
+kids_category = Category.create!(name: "Kids")
 
+# Creating Subcategories for Men
+shirts_subcategory = Subcategory.create!(name: "Shirts", category: men_category)
+pants_subcategory = Subcategory.create!(name: "Pants", category: men_category)
 
-# Suppression des anciennes catégories
-#Category.delete_all
+# Creating Subcategories for Women
+dresses_subcategory = Subcategory.create!(name: "Dresses", category: women_category)
+skirts_subcategory = Subcategory.create!(name: "Skirts", category: women_category)
 
-# Création des catégories principales
-#men = Category.create(name: 'Men')
-#women = Category.create(name: 'Women')
-#kids = Category.create(name: 'Kids')
+# Creating Subcategories for Kids
+toys_subcategory = Subcategory.create!(name: "Toys", category: kids_category)
+clothes_subcategory = Subcategory.create!(name: "Clothes", category: kids_category)
 
-# Création des sous-catégories pour 'Men'
-#shirts = Category.create(name: 'Shirts', parent_category: men)
-#pants = Category.create(name: 'Pants', parent_category: men)
-#shoes_women = Category.create(name: 'Shoes', parent_category: women)
+# Creating Products for Men
+Product.create!(name: "Men's Formal Shirt", price: 50.00, description: "High-quality formal shirt.", subcategory: shirts_subcategory)
+Product.create!(name: "Men's Casual Pants", price: 40.00, description: "Comfortable casual pants.", subcategory: pants_subcategory)
 
-# Création des sous-catégories pour 'Women'
-#dresses = Category.create(name: 'Dresses', parent_category: women)
-#skirts = Category.create(name: 'Skirts', parent_category: women)
-#handbags = Category.create(name: 'Handbags', parent_category: women)
+# Creating Products for Women
+Product.create!(name: "Women's Summer Dress", price: 60.00, description: "Stylish summer dress.", subcategory: dresses_subcategory)
+Product.create!(name: "Women's Skirt", price: 30.00, description: "Elegant skirt.", subcategory: skirts_subcategory)
 
-# Création des sous-catégories pour 'Kids'
-#toys = Category.create(name: 'Toys', parent_category: kids)
-#clothes = Category.create(name: 'Clothes', parent_category: kids)
-#shoes_kids = Category.create(name: 'Shoes', parent_category: kids)
+# Creating Products for Kids
+Product.create!(name: "Kids Toy Car", price: 20.00, description: "Fun toy car for kids.", subcategory: toys_subcategory)
+Product.create!(name: "Kids T-shirt", price: 15.00, description: "Cool t-shirt for kids.", subcategory: clothes_subcategory)
 
-#puts "Categories and subcategories created successfully!"
+puts "Seed data inserted successfully!"

@@ -1,19 +1,21 @@
 class CategoriesController < ApplicationController
- 
+  before_action :set_category, only: [:show]
 
+  # GET /categories
+  def index
+    @categories = Category.all
+  end
 
-    def show
-      @category = Category.find(params[:id])
-    
-      # If a category has a parent_id, it's considered a subcategory
-      if params[:subcategory_id]
-        @subcategory = Category.find(params[:subcategory_id])
-        @products = @subcategory.products
-      else
-        @products = @category.products
-      end
-    end
-  
+  # GET /categories/:id
+  def show
+    @subcategories = @category.subcategories
+    @products = @category.products
+  end
 
+  private
 
+  # Set the category based on params[:id]
+  def set_category
+    @category = Category.find(params[:id])
+  end
 end

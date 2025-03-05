@@ -2,12 +2,8 @@
 
 one:
   name: MyString
-  price: 9.99
-  description: MyText
-  subcategory: one
+  category: one
 
 two:
   name: MyString
-  price: 9.99
-  description: MyText
-  subcategory: two
+  category: two

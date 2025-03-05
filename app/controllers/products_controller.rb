@@ -1,29 +1,26 @@
-
-
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_categories, only: [:new, :edit, :create, :update]
-  before_action :set_subcategories, only: [:edit, :new]
 
+  # GET /products
+  def index
+    @products = Product.all
+  end
 
-def index
-  @products =Product.all
-end
+  # GET /products/1
+  def show
+  end
 
-
+  # GET /products/new
   def new
     @product = Product.new
   end
 
+  # GET /products/1/edit
   def edit
   end
 
-  def show
-    @category = @product.category  # Récupérer la catégorie associée
-    @subcategory = @product.subcategory  # Récupérer la sous-catégorie associée, si elle existe
-  end
-  
-
+  # POST /products
   def create
     @product = Product.new(product_params)
     if @product.save
@@ -33,6 +30,7 @@ end
     end
   end
 
+  # PATCH/PUT /products/1
   def update
     if @product.update(product_params)
       redirect_to @product, notice: 'Product was successfully updated.'
@@ -41,34 +39,25 @@ end
     end
   end
 
-
+  # DELETE /products/1
   def destroy
     @product.destroy
-    redirect_to products_path  
-  end 
-
-
-  def subcategories
-    category = Category.find(params[:category_id])
-    subcategories = category.subcategories
-    render json: { subcategories: subcategories }
+    redirect_to products_url, notice: 'Product was successfully destroyed.'
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_product
+      @product = Product.find(params[:id])
+    end
 
-  def set_product
-    @product = Product.find(params[:id])
-  end
+    # Set categories for dropdown in form
+    def set_categories
+      @categories = Category.all
+    end
 
-  def set_categories
-    @categories = Category.where(parent_id: nil) # Categories principales
-  end
-
-  def set_subcategories
-      @subcategories = Category.where.not(parent_id: nil) || []  # Récupérer toutes les sous-catégories
-  end
-
-  def product_params
-    params.require(:product).permit(:name, :description,:price, :image ,:category_id,:subcategory_id)
-  end
+    # Only allow a list of trusted parameters through.
+    def product_params
+      params.require(:product).permit(:name, :price, :description,:image, :subcategory_id)
+    end
 end

@@ -1,6 +1,44 @@
 
+<!--
 
 <%= render "form" ,product: @product %>
+-->
+
+
+
+<%= form_with model: @product, local: true do |form| %>
+  <div>
+    <%= form.label :name, 'Product Name' %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :price, 'Price' %>
+    <%= form.number_field :price, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :description, 'Description' %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :category, 'Category' %>
+    <%= form.collection_select :category_id, @categories, :id, :name, prompt: 'Select a Category' %>
+  </div>
+
+  <div id="subcategory_field" style="display: none;">
+    <%= form.label :subcategory_id, 'Subcategory' %>
+    <%= form.select :subcategory_id, [], {}, id: "subcategory_select" %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
+
 
 
 
@@ -59,3 +97,36 @@
 
 <%= link_to 'Back', products_path %>
 -->
+
+
+
+<script >
+document.addEventListener("DOMContentLoaded", () => {
+  const categorySelect = document.querySelector("#product_category_id");
+  const subcategoryField = document.querySelector("#subcategory_field");
+  const subcategorySelect = document.querySelector("#subcategory_select");
+
+  categorySelect.addEventListener("change", (event) => {
+    const categoryId = event.target.value;
+
+    if (categoryId) {
+      fetch(`/categories/${categoryId}/subcategories`)
+        .then(response => response.json())
+        .then(data => {
+          subcategoryField.style.display = "block";
+          subcategorySelect.innerHTML = ""; // Clear previous options
+
+          data.subcategories.forEach(subcategory => {
+            const option = document.createElement("option");
+            option.value = subcategory.id;
+            option.textContent = subcategory.name;
+            subcategorySelect.appendChild(option);
+          });
+        });
+    } else {
+      subcategoryField.style.display = "none";
+    }
+  });
+});
+
+</script>
