@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
-    before_action :load_categories
+  before_action :set_cart_items_count
 
-    private
-  
-    def load_categories
-      @categories = Category.where(parent_id: nil) # Récupérer uniquement les catégories principales
-    end
+  private
+
+  def set_cart_items_count
+    @cart_items_count = current_user.shopping_cart.shopping_cart_items.count if user_signed_in?
+  end
     
 end

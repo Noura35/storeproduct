@@ -1,10 +1,24 @@
-<section class="bg-white">
+<section class="bg-white mb-8">
   <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
     <h2 class="mb-4 text-xl font-bold text-gray-900"><%= action_name.capitalize %> Product</h2>
     
     <%= form_with(model: @product, local: true, html: { multipart: true }) do |form| %>
-      <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-        
+
+
+      <% if @product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+      <ul>
+        <% @product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+      <div class="grid gap-4 sm:grid-cols-2 sm:gap-6"> 
         <!-- Name -->
         <div class="sm:col-span-2">
           <%= form.label :name, class: "block mb-2 text-sm font-medium text-gray-900" %> 
@@ -38,16 +52,14 @@
         <!-- Subcategory -->
         <div>
           <%= form.label :subcategory_id, 'Subcategory', class: "block mb-2 text-sm font-medium text-gray-900" %>
-          <%= form.collection_select :subcategory_id, @subcategories || [], :id, :name, prompt: 'Select a subcategory', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" %>
+          <%= form.collection_select :subcategory_id, @categories.flat_map(&:subcategories), :id, :name, prompt: 'Select a subcategory', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" %>
         </div>
         
         <!-- Description -->
         <div class="sm:col-span-2">
           <%= form.label :description, class: "block mb-2 text-sm font-medium text-gray-900" %><br>
           <%= form.text_area :description, class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300", placeholder: "Your description here" %>
-          <% @product.errors.full_messages_for(:description).each do |message| %>
-            <div class="text-red-600"><%= message %></div>
-          <% end %>
+       
         </div>
         
      
@@ -62,3 +74,8 @@
     <% end %>
   </div>
 </section>
+
+
+
+
+
